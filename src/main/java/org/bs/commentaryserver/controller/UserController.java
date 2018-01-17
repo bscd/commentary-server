@@ -1,8 +1,8 @@
-package bs.org.commentaryserver.controller;
+package org.bs.commentaryserver.controller;
 
 
-import bs.org.commentaryserver.db.model.User;
-import bs.org.commentaryserver.service.UserService;
+import org.bs.commentaryserver.db.model.User;
+import org.bs.commentaryserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

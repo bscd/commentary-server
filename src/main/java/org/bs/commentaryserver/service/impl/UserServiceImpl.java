@@ -1,9 +1,9 @@
-package bs.org.commentaryserver.service.impl;
+package org.bs.commentaryserver.service.impl;
 
-import bs.org.commentaryserver.db.mapper.UserMapper;
-import bs.org.commentaryserver.db.model.User;
-import bs.org.commentaryserver.service.UserService;
 import com.github.pagehelper.PageHelper;
+import org.bs.commentaryserver.db.mapper.UserMapper;
+import org.bs.commentaryserver.db.model.User;
+import org.bs.commentaryserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;

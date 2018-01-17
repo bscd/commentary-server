@@ -1,6 +1,6 @@
-package bs.org.commentaryserver.db.mapper;
+package org.bs.commentaryserver.db.mapper;
 
-import bs.org.commentaryserver.db.model.User;
+import org.bs.commentaryserver.db.model.User;
 
 import java.util.List;
 

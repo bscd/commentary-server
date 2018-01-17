@@ -1,6 +1,6 @@
-package bs.org.commentaryserver.service;
+package org.bs.commentaryserver.service;
 
-import bs.org.commentaryserver.db.model.User;
+import org.bs.commentaryserver.db.model.User;
 
 import java.util.List;
 

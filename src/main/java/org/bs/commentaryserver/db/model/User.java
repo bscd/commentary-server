@@ -1,4 +1,4 @@
-package bs.org.commentaryserver.db.model;
+package org.bs.commentaryserver.db.model;
 
 public class User
 {
