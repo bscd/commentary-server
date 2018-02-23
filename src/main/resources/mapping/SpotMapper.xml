@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.bs.commentaryserver.db.mapper.SpotMapper">
+    <resultMap id="BaseResultMap" type="org.bs.commentaryserver.db.model.Spot">
+        <id column="spot_id" property="spotId" jdbcType="INTEGER"/>
+        <result column="spot_name" property="spotName" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="short_picurl" property="shortPicurl" jdbcType="VARCHAR"/>
+        <result column="short_desc" property="shortDesc" jdbcType="VARCHAR"/>
+        <result column="detail_picurl" property="detailPicurl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="org.bs.commentaryserver.db.model.Spot" extends="BaseResultMap">
+        <result column="detail_desc" property="detailDesc" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    spot_id, spot_name, province, city, short_picurl, short_desc, detail_picurl
+  </sql>
+    <sql id="Blob_Column_List">
+    detail_desc
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from t_spot
+        where spot_id = #{spotId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByCity" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_spot
+        where province = #{p_province,jdbcType=VARCHAR}
+        and city = #{p_city,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_spot
+    where spot_id = #{spotId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="org.bs.commentaryserver.db.model.Spot">
+    insert into t_spot (spot_id, spot_name, province, 
+      city, short_picurl, short_desc, 
+      detail_picurl, detail_desc)
+    values (#{spotId,jdbcType=INTEGER}, #{spotName,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{shortPicurl,jdbcType=VARCHAR}, #{shortDesc,jdbcType=VARCHAR}, 
+      #{detailPicurl,jdbcType=VARCHAR}, #{detailDesc,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="org.bs.commentaryserver.db.model.Spot">
+        insert into t_spot
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="spotId != null">
+                spot_id,
+            </if>
+            <if test="spotName != null">
+                spot_name,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="shortPicurl != null">
+                short_picurl,
+            </if>
+            <if test="shortDesc != null">
+                short_desc,
+            </if>
+            <if test="detailPicurl != null">
+                detail_picurl,
+            </if>
+            <if test="detailDesc != null">
+                detail_desc,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="spotId != null">
+                #{spotId,jdbcType=INTEGER},
+            </if>
+            <if test="spotName != null">
+                #{spotName,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="shortPicurl != null">
+                #{shortPicurl,jdbcType=VARCHAR},
+            </if>
+            <if test="shortDesc != null">
+                #{shortDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="detailPicurl != null">
+                #{detailPicurl,jdbcType=VARCHAR},
+            </if>
+            <if test="detailDesc != null">
+                #{detailDesc,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.bs.commentaryserver.db.model.Spot">
+        update t_spot
+        <set>
+            <if test="spotName != null">
+                spot_name = #{spotName,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="shortPicurl != null">
+                short_picurl = #{shortPicurl,jdbcType=VARCHAR},
+            </if>
+            <if test="shortDesc != null">
+                short_desc = #{shortDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="detailPicurl != null">
+                detail_picurl = #{detailPicurl,jdbcType=VARCHAR},
+            </if>
+            <if test="detailDesc != null">
+                detail_desc = #{detailDesc,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where spot_id = #{spotId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.bs.commentaryserver.db.model.Spot">
+    update t_spot
+    set spot_name = #{spotName,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      short_picurl = #{shortPicurl,jdbcType=VARCHAR},
+      short_desc = #{shortDesc,jdbcType=VARCHAR},
+      detail_picurl = #{detailPicurl,jdbcType=VARCHAR},
+      detail_desc = #{detailDesc,jdbcType=LONGVARCHAR}
+    where spot_id = #{spotId,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="org.bs.commentaryserver.db.model.Spot">
+    update t_spot
+    set spot_name = #{spotName,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      short_picurl = #{shortPicurl,jdbcType=VARCHAR},
+      short_desc = #{shortDesc,jdbcType=VARCHAR},
+      detail_picurl = #{detailPicurl,jdbcType=VARCHAR}
+    where spot_id = #{spotId,jdbcType=INTEGER}
+  </update>
+</mapper>
