@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="60">
+    <properties>
+        <property name="MSG_LOG_HOME">Logs</property>
+        <property name="RUN_LOG_PATTERN">%d{yyyy-MM-dd_HH:mm:ss.SSS}|%-5level|%thread|%logger| %msg%xEx%n</property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+            </PatternLayout>
+        </Console>
+        <!-- 打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+        <RollingRandomAccessFile name="runLogFile" filename="${MSG_LOG_HOME}/run.log" immediateFlush="true"
+                                 filePattern="${MSG_LOG_HOME}/$${date:yyyy-MM}/run_%d{yyyy-MM-DD}_%i.zip">
+            <PatternLayout pattern="${RUN_LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <!-- 指定每天的最大压缩包个数，默认7个，超过了会覆盖之前的 -->
+            <DefaultRolloverStrategy max="50"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="otherLogFile" filename="${MSG_LOG_HOME}/other.log" immediateFlush="true"
+                                 filePattern="${MSG_LOG_HOME}/$${date:yyyy-MM}/other_%d{yyyy-MM-DD}_%i.zip">
+            <PatternLayout pattern="${RUN_LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <!--<Filters>-->
+            <!--&lt;!&ndash; 只记录info和warn级别信息 &ndash;&gt;-->
+            <!--<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+            <!--<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
+            <!--</Filters>-->
+            <!-- 指定每天的最大压缩包个数，默认7个，超过了会覆盖之前的 -->
+            <DefaultRolloverStrategy max="50"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <Root level="warn">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="otherLogFile"/>
+        </Root>
+        <Logger name="org.bs.commentaryserver.controller" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="runLogFile"/>
+        </Logger>
+    </Loggers>
+</Configuration>
