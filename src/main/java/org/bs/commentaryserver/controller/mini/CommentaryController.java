@@ -1,4 +1,4 @@
-package org.bs.commentaryserver.controller;
+package org.bs.commentaryserver.controller.mini;
 
 
 import org.bs.commentaryserver.Responser.SuccessRsp;
